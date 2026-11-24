@@ -8,6 +8,9 @@ import TextField from "../components/TextField";
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
+type FieldKey = "name" | "email" | "phone" | "password";
+const FIELDS: FieldKey[] = ["name", "email", "phone", "password"];
+
 export default function RegisterPage() {
   const router = useRouter();
   const [form, setForm] = useState({ name: "", email: "", phone: "", password: "", confirm: "" });
@@ -39,10 +42,36 @@ export default function RegisterPage() {
         body: JSON.stringify({ name: form.name, email: form.email, phone: form.phone || undefined, password: form.password }),
       });
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data?.error?.message ?? "Registration failed. Try again.");
-      router.push("/login");
+
+      if (!res.ok) {
+        const apiErr = data?.error;
+
+        // Duplicate email -> show it under the email field
+        if (apiErr?.code === "EMAIL_TAKEN") {
+          setErrors({ email: apiErr.message });
+          return;
+        }
+        // Server-side validation errors -> show each under its own field
+        const details = apiErr?.details as Record<string, string[]> | undefined;
+        if (details) {
+          const mapped: Record<string, string> = {};
+          for (const key of FIELDS) if (details[key]?.[0]) mapped[key] = details[key][0];
+          if (Object.keys(mapped).length) {
+            setErrors(mapped);
+            return;
+          }
+        }
+        throw new Error(apiErr?.message ?? "Registration failed. Try again.");
+      }
+
+      router.push("/login?registered=1");
     } catch (err) {
-      setFormError(err instanceof Error ? err.message : "Something went wrong. Try again.");
+      // fetch() rejects with a TypeError when the API is unreachable or blocked by CORS
+      if (err instanceof TypeError) {
+        setFormError("Can't reach the server. Check your connection and try again.");
+      } else {
+        setFormError(err instanceof Error ? err.message : "Something went wrong. Try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -60,7 +89,7 @@ export default function RegisterPage() {
         {formError && <div className="alert" role="alert">{formError}</div>}
         <TextField id="name" label="Full name" icon={<User size={18} />} value={form.name} onChange={set("name")} error={errors.name} autoComplete="name" />
         <TextField id="email" label="Email address" type="email" icon={<Mail size={18} />} value={form.email} onChange={set("email")} error={errors.email} autoComplete="email" />
-        <TextField id="phone" label="Phone number (optional)" type="tel" icon={<Phone size={18} />} value={form.phone} onChange={set("phone")} autoComplete="tel" />
+        <TextField id="phone" label="Phone number (optional)" type="tel" icon={<Phone size={18} />} value={form.phone} onChange={set("phone")} error={errors.phone} autoComplete="tel" />
         <TextField id="password" label="Password" type="password" icon={<Lock size={18} />} value={form.password} onChange={set("password")} error={errors.password} autoComplete="new-password" />
         <TextField id="confirm" label="Confirm password" type="password" icon={<Lock size={18} />} value={form.confirm} onChange={set("confirm")} error={errors.confirm} autoComplete="new-password" />
         <ul className="hint">
