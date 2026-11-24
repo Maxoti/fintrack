@@ -4,7 +4,7 @@
 set -e
 
 APP_NAME="fintrack-api"   # Application root folder name in cPanel
-NODE_VER="20"             # Node.js version chosen in cPanel
+NODE_VER="22"             # Node.js version chosen in cPanel
 APP_ROOT="$HOME/$APP_NAME"
 
 echo "==> Activating Node $NODE_VER environment"
