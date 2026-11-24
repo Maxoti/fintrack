@@ -18,10 +18,14 @@ cp -R backend/src "$APP_ROOT/src"
 
 cd "$APP_ROOT"
 
-echo "==> Installing dependencies (including dev, needed for the TypeScript build)"
-npm install --include=dev
+echo "==> Installing dependencies (dev included for the TypeScript build)"
+# --ignore-scripts: the shared host's process limit blocks esbuild's install-time
+# binary check, and nothing in production needs esbuild.
+npm install --include=dev --ignore-scripts --no-audit --no-fund
 
 echo "==> Building"
+# Limit Go runtime threads in case the TypeScript compiler is a native binary
+export GOMAXPROCS=1
 npm run build
 
 echo "==> Restarting app"
