@@ -1,4 +1,5 @@
 import Logo from "./Logo";
+import ThemeToggle from "./ThemeToggle";
 
 type Props = {
   headline: React.ReactNode;
@@ -13,7 +14,10 @@ export default function AuthShell({ headline, blurb, showFeatures, children }: P
       <section className="auth__brand">
         <div className="auth__top">
           <Logo />
-          <p className="auth__tagline">Track. Grow. Achieve.</p>
+          <div className="auth__top-right">
+            <p className="auth__tagline">Track. Grow. Achieve.</p>
+            <ThemeToggle />
+          </div>
         </div>
         <div className="auth__hero">
           <h1>{headline}</h1>
