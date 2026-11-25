@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useSyncExternalStore } from "react";
 import { Briefcase, LogOut } from "lucide-react";
 import Logo from "../../components/Logo";
+import ThemeToggle from "../../components/ThemeToggle";
 import { clearToken } from "../../lib/api";
 
 const subscribe = (cb: () => void) => {
@@ -72,10 +73,13 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       </aside>
       <div className="d-main">
         <header className="d-top">
-          <span className="d-top__brand">
+          <span>
             <strong>FinTrack</strong> by Finnet Technologies
           </span>
-          <span className="d-user">{session.email}</span>
+          <span className="d-top__right">
+            <span className="d-user">{session.email}</span>
+            <ThemeToggle />
+          </span>
         </header>
         <main id="main" className="d-content">
           {children}
