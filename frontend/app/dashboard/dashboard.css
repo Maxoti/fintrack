@@ -15,7 +15,7 @@
 .d-top { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; color: var(--heading); }
 .d-top__right { display: inline-flex; align-items: center; gap: 12px; min-width: 0; }
 .d-user { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.d-content { padding: 24px; width: 100%; max-width: 1240px; }
+.d-content { padding: 24px; width: 100%; max-width: none; }
 
 .d-hero { background: var(--navy-900); border: 1px solid transparent; color: #fff; border-radius: var(--radius); padding: 22px 26px; margin-bottom: 20px; }
 .d-hero h1 { margin: 0 0 4px; font-size: 1.6rem; }
