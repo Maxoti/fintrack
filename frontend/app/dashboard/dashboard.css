@@ -113,10 +113,12 @@
 }
 @media (max-width: 860px) {
   .d-app { grid-template-columns: 1fr; }
-  .d-side { flex-direction: row; align-items: center; justify-content: space-between; padding: 12px 16px; gap: 12px; flex-wrap: wrap; }
+  .d-side { flex-direction: row; align-items: center; justify-content: space-between; padding: 10px 16px; gap: 8px; flex-wrap: wrap; }
   .d-nav-list { display: flex; }
   .d-nav { width: auto; padding: 8px 10px; }
   .d-tagline { display: none; }
+  .d-top { justify-content: flex-end; padding: 8px 16px; }
+  .d-top__brand { display: none; }
   .d-content { padding: 16px; }
   .d-row2 { grid-template-columns: 1fr; }
 }

@@ -72,7 +72,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       </aside>
       <div className="d-main">
         <header className="d-top">
-          <span>
+          <span className="d-top__brand">
             <strong>FinTrack</strong> by Finnet Technologies
           </span>
           <span className="d-user">{session.email}</span>
