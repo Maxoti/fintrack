@@ -9,8 +9,8 @@ A branded portfolio and transactions tracker. An analyst registers client portfo
 | **Swagger / OpenAPI docs** | https://fintrack-api.revisionvault.co.ke/api/docs |
 | **Health check** | https://fintrack-api.revisionvault.co.ke/api/health |
 | **Demo login** | `demo@fintrack.test` / `Demo@1234` (pre-seeded with sample portfolios and transactions) |
-| **Screenshots | | [see below](#screenshots) |
 
+| **Screenshots** | [see below](#screenshots) |
 All data is fictional. The deployment stays running for at least 14 days after submission (until 9 December 2026).
 
 ## Architecture
@@ -120,9 +120,11 @@ Every error uses one JSON shape, with the matching HTTP status (validation error
 
 - Login and register with client-side validation, and server errors shown on the relevant field.
 - Dashboard with the analyst's portfolios (create, edit and delete with a confirmation modal).
-- Portfolio detail: transactions table, add-transaction form, holdings summary and an allocation donut chart.
+- Portfolio detail: holdings summary, add-transaction form and an allocation donut chart.
+- Transactions table with sorting, filtering by instrument and type, pagination, and CSV export.
 - Loading, empty and error states with a retry action; responsive layout down to 375px.
 - Brand: "FinTrack by Finnet Technologies", a deep-navy primary with one amber accent and neutral greys, defined once as CSS variables in `frontend/app/globals.css`.
+- Dark mode toggle that reuses the same design tokens.
 - Accessibility: labelled inputs, visible focus styles, destructive actions behind a confirmation.
 
 ## Tests
@@ -209,7 +211,7 @@ Live API docs: https://fintrack-api.revisionvault.co.ke/api/docs
 - Running cost-basis accounting and realised P&L on SELLs.
 - httpOnly cookie sessions with refresh tokens.
 - Frontend component and end-to-end tests.
-- Dark mode using the existing design tokens.
+-
 
 ## AI tool usage
 
